@@ -1,26 +1,45 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <main-screen
+      v-if="statusMatch === 'default'"
+      @onStart="onHandleBeforeStart($event)">
+  </main-screen>
+  <interact-screen v-if="statusMatch === 'playing'"></interact-screen>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import MainScreen from "@/components/MainScreen.vue";
+import InteractScreen from "@/components/InteractScreen.vue";
 
 export default {
   name: "App",
+  data() {
+    return {
+      settings: {
+        totalOfCards: 0,
+        cardContext: [],
+      },
+      statusMatch: "default",
+    };
+  },
   components: {
-    HelloWorld,
+    MainScreen,
+    InteractScreen,
+  },
+  methods: {
+    onHandleBeforeStart(config) {
+      console.log("running test ...", config);
+      this.settings.totalOfCards = config.totalOfCard;
+
+      const firstCardsArray = Array.from(
+        { length: this.settings.totalOfCards / 2 },
+        (_, i) => i + 1
+      );
+      const secondCardsArray = [...firstCardsArray];
+      const cards = [...firstCardsArray, ...secondCardsArray];
+      console.log(cards);
+      //data ready
+      this.statusMatch = "playing";
+    },
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
