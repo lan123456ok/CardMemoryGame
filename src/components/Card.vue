@@ -6,10 +6,16 @@
       @click="onToggleFlipCard"
     >
       <div class="card-face card-face-front">
-        <div class="card-content">Front</div>
+        <div class="card-content"><p class="title-card-front">Taimanin</p></div>
       </div>
       <div class="card-face card-face-behind">
-        <div class="card-content">Behind</div>
+        <div
+          class="card-content"
+          :style="{
+            backgroundImage: `url(${require('@/assets/' +
+              imageBehindFaceUrl)})`,
+          }"
+        ></div>
       </div>
     </div>
   </div>
@@ -17,6 +23,12 @@
 
 <script>
 export default {
+  props: {
+    imageBehindFaceUrl: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       isFlipped: false,
@@ -58,11 +70,31 @@ export default {
   backface-visibility: hidden;
   overflow: hidden;
   border-radius: 1rem;
-  padding: 1rem;
   box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.2);
 }
+.card-face.card-face-front {
+  padding: 1rem;
+}
+.title-card-front {
+  font-size: 1.2rem;
+  margin-top: 36px;
+}
+.card-face-front .card-content {
+  background: url("../assets/images/icon_back_2.png") no-repeat;
+  background-size: 80px 80px;
+  height: 50%;
+  width: 100%;
+}
+
 .card-face-behind {
-  background-color: var(--light);
+  //background-color: var(--light);
   transform: rotateY(-180deg);
+}
+.card-face-behind .card-content {
+  background-size: 300px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
 }
 </style>

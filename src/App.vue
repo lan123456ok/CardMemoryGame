@@ -1,14 +1,19 @@
 <template>
   <main-screen
-      v-if="statusMatch === 'default'"
-      @onStart="onHandleBeforeStart($event)">
+    v-if="statusMatch === 'default'"
+    @onStart="onHandleBeforeStart($event)"
+  >
   </main-screen>
-  <interact-screen v-if="statusMatch === 'playing'"></interact-screen>
+  <interact-screen
+    v-if="statusMatch === 'playing'"
+    :cardsContext="settings.cardsContext"
+  ></interact-screen>
 </template>
 
 <script>
 import MainScreen from "@/components/MainScreen.vue";
 import InteractScreen from "@/components/InteractScreen.vue";
+import { shuffled } from "./utils/array";
 
 export default {
   name: "App",
@@ -16,7 +21,8 @@ export default {
     return {
       settings: {
         totalOfCards: 0,
-        cardContext: [],
+        cardsContext: [],
+        startedAt: null,
       },
       statusMatch: "default",
     };
@@ -36,7 +42,9 @@ export default {
       );
       const secondCardsArray = [...firstCardsArray];
       const cards = [...firstCardsArray, ...secondCardsArray];
-      console.log(cards);
+      this.settings.cardsContext = shuffled(shuffled(shuffled(cards)));
+      // Time
+      this.settings.startedAt = new Date().getTime();
       //data ready
       this.statusMatch = "playing";
     },
