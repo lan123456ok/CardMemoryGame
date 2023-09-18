@@ -1,22 +1,38 @@
 <template>
-  <div class="card" :class="{ disabled: isDisabled }" :style="{
-    height: `${(920 - 16 * 4)/ Math.sqrt(cardsContext.length) -16}px`,
-    width: `${((920 - 16 * 4)/ Math.sqrt(cardsContext.length) -16) * 3 / 4}px`,
-    perspective: `${((920 - 16 * 4)/ Math.sqrt(cardsContext.length) -16) * 3 / 4 * 2}px`,
-  }">
+  <div
+    class="card"
+    :class="{ disabled: isDisabled }"
+    :style="{
+      height: `${(920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16}px`,
+      width: `${
+        (((920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16) * 3) / 4
+      }px`,
+      perspective: `${
+        ((((920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16) * 3) / 4) * 2
+      }px`,
+    }"
+  >
     <div
       class="card-inner"
       :class="{ 'is-flipped': isFlipped }"
       @click="onToggleFlipCard"
     >
       <div class="card-face card-face-front">
-        <div class="card-content" 
-        :style="{
-          backgroundSize: `${((920 - 16 * 4)/ Math.sqrt(cardsContext.length) -16) * 3 / 4 / 2}px 
-          ${((920 - 16 * 4)/ Math.sqrt(cardsContext.length) -16) * 3 / 4 / 2}px`,
-        }">
-        <!-- <p class="title-card-front">Taimanin</p> -->
-      </div>
+        <div
+          class="card-content"
+          :style="{
+            backgroundSize: `${
+              (((920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16) * 3) /
+              4 /
+              2
+            }px 
+          ${
+            (((920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16) * 3) / 4 / 2
+          }px`,
+          }"
+        >
+          <!-- <p class="title-card-front">Taimanin</p> -->
+        </div>
       </div>
       <div class="card-face card-face-behind">
         <div
@@ -24,7 +40,6 @@
           :style="{
             backgroundImage: `url(${require('@/assets/' +
               imageBehindFaceUrl)})`,
-
           }"
         ></div>
       </div>
@@ -44,9 +59,9 @@ export default {
     },
     cardsContext: {
       type: Array,
-      default: function() {
+      default: function () {
         return [];
-      }
+      },
     },
   },
   data() {
@@ -93,7 +108,7 @@ export default {
 .card-inner.is-flipped {
   transform: rotateY(-180deg);
 }
-.card.disabled .card-inner{
+.card.disabled .card-inner {
   cursor: default;
 }
 

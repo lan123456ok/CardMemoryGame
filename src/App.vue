@@ -10,9 +10,10 @@
     @onFinish="onGetResult()"
   ></interact-screen>
   <result-screen
-  v-if="statusMatch === 'result'"
-  :timePlaying="timePlaying"
-  @onStartAgain="statusMatch = 'default'"></result-screen>
+    v-if="statusMatch === 'result'"
+    :timePlaying="timePlaying"
+    @onStartAgain="statusMatch = 'default'"
+  ></result-screen>
 </template>
 
 <script>

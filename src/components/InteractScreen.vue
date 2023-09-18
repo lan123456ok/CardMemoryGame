@@ -1,10 +1,24 @@
 <template>
   <div class="screen">
-    <div class="screen-inner" :style="{width: `${((((920 - 16 * 4)/ Math.sqrt(cardsContext.length) -16) * 3) / 4 + 16) * Math.sqrt(cardsContext.length)}px`,}">
-      <card-flip v-for="(card, index) in cardsContext" :key="index" :ref="`card-${index}`"
-    :imageBehindFaceUrl="`images/${card}.png`" :card="{ index, value: card }" @onFlip="checkRule($event)"
-    :cardsContext="cardsContext"
-    ></card-flip>
+    <div
+      class="screen-inner"
+      :style="{
+        width: `${
+          ((((920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16) * 3) / 4 +
+            16) *
+          Math.sqrt(cardsContext.length)
+        }px`,
+      }"
+    >
+      <card-flip
+        v-for="(card, index) in cardsContext"
+        :key="index"
+        :ref="`card-${index}`"
+        :imageBehindFaceUrl="`images/${card}.png`"
+        :card="{ index, value: card }"
+        @onFlip="checkRule($event)"
+        :cardsContext="cardsContext"
+      ></card-flip>
     </div>
   </div>
 </template>
@@ -34,27 +48,40 @@ export default {
       if (this.rules.length === 2) return false;
 
       this.rules.push(card);
-      console.log("flip card ...");
+      // console.log(this.$refs[`card-${this.rules[0].index}`][0].card.index);
+      // console.log(this.$refs[`card-${this.rules[1].index}`][0].card.index);
 
       if (
         this.rules.length === 2 &&
         this.rules[0].value === this.rules[1].value
       ) {
-        // console.log("right");
-        // two card is disabled
-        this.$refs[`card-${this.rules[0].index}`][0].onEnableDisabled();
+        // check if has duplicate index
+        if (
+          this.$refs[`card-${this.rules[0].index}`][0].card.index ===
+          this.$refs[`card-${this.rules[1].index}`][0].card.index
+        ) {
+          setTimeout(() => {
+            this.$refs[`card-${this.rules[1].index}`][0].onFlipBackCard();
+            this.rules = [];
+          }, 800);
+          
+        } else {
+          // console.log("right");
+          // two card is disabled
+          this.$refs[`card-${this.rules[0].index}`][0].onEnableDisabled();
           this.$refs[`card-${this.rules[1].index}`][0].onEnableDisabled();
-        // reset rule aray
-        this.rules = [];
+          // reset rule aray
+          this.rules = [];
 
-        // check the right
-        const disableElements = document.querySelectorAll(".screen .card.disabled");
-        console.log(this.cardsContext.length);
-        console.log(disableElements.length);
-        if (disableElements && disableElements.length === 0){
-          setTimeout(() =>{
-            this.$emit("onFinish");
-          }, 920);
+          // the right pair
+          const disableElements = document.querySelectorAll(
+            ".screen .card.disabled"
+          );
+          if (disableElements && disableElements.length === this.cardsContext.length - 2) {
+            setTimeout(() => {
+              this.$emit("onFinish");
+            }, 920);
+          }
         }
       } else if (
         this.rules.length === 2 &&
@@ -62,11 +89,17 @@ export default {
       ) {
         // console.log("fail");
         setTimeout(() => {
-          // close two card
-          this.$refs[`card-${this.rules[0].index}`][0].onFlipBackCard();
-          this.$refs[`card-${this.rules[1].index}`][0].onFlipBackCard();
-          // reset rule array
+          //temp de nho tam
+          let temp = [...this.rules];
+          console.log("temp", temp);
+          let index0 = this.rules[0].index;
+          let index1 = this.rules[1].index;
           this.rules = [];
+          // close two card
+          this.$refs[`card-${index0}`][0].onFlipBackCard();
+          this.$refs[`card-${index1}`][0].onFlipBackCard();
+          // reset temp array
+          this.temp = [];
         }, 800);
       } else return false;
     },
