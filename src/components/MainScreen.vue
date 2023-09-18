@@ -11,7 +11,7 @@
         <span>6x6</span>
         <span>Normal</span>
       </button>
-      <button @click="onStart(68)" class="">
+      <button @click="onStart(64)" class="">
         <span>8x8</span>
         <span>Hard</span>
       </button>

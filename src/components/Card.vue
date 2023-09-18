@@ -1,12 +1,22 @@
 <template>
-  <div class="card" :class="{ disabled: isDisabled }">
+  <div class="card" :class="{ disabled: isDisabled }" :style="{
+    height: `${(920 - 16 * 4)/ Math.sqrt(cardsContext.length) -16}px`,
+    width: `${((920 - 16 * 4)/ Math.sqrt(cardsContext.length) -16) * 3 / 4}px`,
+    perspective: `${((920 - 16 * 4)/ Math.sqrt(cardsContext.length) -16) * 3 / 4 * 2}px`,
+  }">
     <div
       class="card-inner"
       :class="{ 'is-flipped': isFlipped }"
       @click="onToggleFlipCard"
     >
       <div class="card-face card-face-front">
-        <div class="card-content"><p class="title-card-front">Taimanin</p></div>
+        <div class="card-content" 
+        :style="{
+          backgroundSize: `${((920 - 16 * 4)/ Math.sqrt(cardsContext.length) -16) * 3 / 4 / 2}px 
+          ${((920 - 16 * 4)/ Math.sqrt(cardsContext.length) -16) * 3 / 4 / 2}px`,
+        }">
+        <!-- <p class="title-card-front">Taimanin</p> -->
+      </div>
       </div>
       <div class="card-face card-face-behind">
         <div
@@ -14,6 +24,7 @@
           :style="{
             backgroundImage: `url(${require('@/assets/' +
               imageBehindFaceUrl)})`,
+
           }"
         ></div>
       </div>
@@ -30,6 +41,12 @@ export default {
     imageBehindFaceUrl: {
       type: String,
       required: true,
+    },
+    cardsContext: {
+      type: Array,
+      default: function() {
+        return [];
+      }
     },
   },
   data() {
@@ -61,8 +78,8 @@ export default {
   display: inline-block;
   margin-right: 1rem;
   margin-bottom: 1rem;
-  width: 110px;
-  height: 160px;
+  /* width: 110px;
+  height: 160px; */
 }
 
 .card-inner {
@@ -97,9 +114,9 @@ export default {
   margin-top: 36px;
 }
 .card-face-front .card-content {
-  background: url("../assets/images/icon_back_2.png") no-repeat;
-  background-size: 80px 80px;
-  height: 50%;
+  background: url("../assets/images/icon_back_2.png") no-repeat center center;
+  /* background-size: 80px 80px; */
+  height: 100%;
   width: 100%;
 }
 
