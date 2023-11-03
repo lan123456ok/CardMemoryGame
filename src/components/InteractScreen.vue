@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import CardFlip from "@/components/Card.vue";
+import CardFlip from "@/components/CardConfig.vue";
 
 export default {
   props: {
@@ -64,7 +64,6 @@ export default {
             this.$refs[`card-${this.rules[1].index}`][0].onFlipBackCard();
             this.rules = [];
           }, 800);
-          
         } else {
           // console.log("right");
           // two card is disabled
@@ -77,7 +76,10 @@ export default {
           const disableElements = document.querySelectorAll(
             ".screen .card.disabled"
           );
-          if (disableElements && disableElements.length === this.cardsContext.length - 2) {
+          if (
+            disableElements &&
+            disableElements.length === this.cardsContext.length - 2
+          ) {
             setTimeout(() => {
               this.$emit("onFinish");
             }, 920);

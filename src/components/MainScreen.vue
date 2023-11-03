@@ -94,5 +94,5 @@ export default {
   display: block;
   font-size: 1.25rem;
   margin-top: 0.5rem;
-  }
+}
 </style>
